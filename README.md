@@ -1,2 +1,2 @@
 # html
-html and css websi²tes
+html and css websites
