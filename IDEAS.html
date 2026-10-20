@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dripora-ideas</title>
+    <link rel="stylesheet" href="IDEAS.css">
+    <header class="site-header">
+          <!--navbar-->
+        <nav class="navbar">
+            <div class="nav-left" id="algeria-clock">ALG 00:00:00 AM</div>
+            <a href="home.html" class="logo-link">
+                <img src="logo.svg" alt="Dripora" id="logo">
+            </a>
+            <a href="#menu-section" class="menu-link">MENU</a>
+        </nav>
+    </header>
+</head>
+<body>
+    
+<main class="ideas-container">
+        <!-- Page Section Title -->
+        <h1 class="page-title" ID ="f1">
+            <span style="--i:0">I</span><span style="--i:1">D</span><span style="--i:2">E</span><span style="--i:3">A</span><span style="--i:4">S</span><span style="--i:5" class="dot">.</span>
+        </h1>
+
+       <div class="ideas-card">
+  <!-- Left Side: Image -->
+  <div class="card-image-wrapper">
+    <img src="BREAKFEST.avif" alt="Specialty Coffee and Breakfast Table" class="card-image">
+  </div>
+
+  <!-- Right Side: Content -->
+  <div class="card-content">
+    <div class="card-header">
+      <h2 class="card-title">From Bean to Cup: The Journey of Specialty Coffee</h2>
+     
+    </div>
+
+    <div class="card-footer">
+      <p class="card-excerpt">
+        Ever wondered how coffee goes from a tiny green bean to the rich, aromatic brew in your cup? Let's explore the fascinating journey of specialty coffee and what makes it so special.
+      </p>
+      <span class="card-date">15.24.2025</span>
+    </div>
+  </div>
+</div>
+<section class="articles-grid-container">
+  <!-- Article 1 -->
+  <article class="article-card">
+    <div class="card-image-wrapper">
+      <img src="AAA.avif" alt="Brewing Perfection" class="card-image">
+    </div>
+    <div class="card-content">
+      <h3 class="card-title">Brewing Perfection: A Guide to Different Coffee Methods</h3>
+      <p class="card-excerpt">
+        Explore the fascinating journey of coffee beans—from harvesting and processing to roasting and brewing. Learn what makes specialty coffee truly unique.
+      </p>
+    </div>
+  </article>
+
+  <!-- Article 2 -->
+  <article class="article-card">
+    <div class="card-image-wrapper">
+      <img src="0.avif" alt="The Art of Latte" class="card-image">
+    </div>
+    <div class="card-content">
+      <h3 class="card-title">The Art of Latte: How Baristas Create Stunning Coffee Designs</h3>
+      <p class="card-excerpt">
+        Explore the fascinating journey of coffee beans—from harvesting and processing to roasting and brewing. Learn what makes specialty coffee truly unique.
+      </p>
+    </div>
+  </article>
+
+  <!-- Article 3 -->
+  <article class="article-card">
+    <div class="card-image-wrapper">
+      <img src="9.avif" alt="Coffee Around the World" class="card-image">
+    </div>
+    <div class="card-content">
+      <h3 class="card-title">Coffee Around the World: Unique Traditions and Flavors</h3>
+      <p class="card-excerpt">
+        Explore the fascinating journey of coffee beans—from harvesting and processing to roasting and brewing. Learn what makes specialty coffee truly unique.
+      </p>
+    </div>
+  </article>
+</section>
+            <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="meta-col">
+                    <span class="location">Setif, Algeria</span>
+                    <div class="hours">
+                        <span class="label">EVERYDAY</span>
+                        <span class="time">10:00 - 19:00</span>
+                    </div>
+                </div>
+
+                <nav class="nav-links">
+                    <a href="IDEAS.html">IDEAS</a>
+                    <a href="home.html#menu-section">MENU</a>
+                    <a href="FORM.html">FEEDBACK</a>
+                    <a href="chatboot.html">HELP</a>
+                </nav>
+            </div>
+
+            <h2 class="main-title">WHERE COFFEE MEETS CRAFT.</h2>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        function updateAlgeriaClock() {
+            const options = {
+                timeZone: 'Africa/Algiers',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            };
+            const formatter = new Intl.DateTimeFormat('en-US', options);
+            document.getElementById('algeria-clock').textContent = `ALG ${formatter.format(new Date())}`;
+        }
+        updateAlgeriaClock();
+        setInterval(updateAlgeriaClock, 1000);
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const gallery = document.querySelector(".GALLERY1");
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            if (gallery) observer.observe(gallery);
+        });
+    </script>
+</body>
+</html>
