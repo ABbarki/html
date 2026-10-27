@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dripora — Help & Assistant</title>
+    <link rel="stylesheet" href="chatboot.css">
+</head>
+<body>
+    <!--too start thE chat boot type :node CHATBOOT.js -->
+    <!-- Header / Navbar -->
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="nav-left" id="algeria-clock">ALG 00:00:00 AM</div>
+            <a href="home.html" class="logo-link">
+                <img src="logo.svg" alt="Dripora" id="logo">
+            </a>
+            <a href="home.html#menu-section" class="menu-link">MENU</a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <!-- Page Section Title -->
+        <h1 class="page-title" id="f1">
+            <span style="--i:0">H</span><span style="--i:1">E</span><span style="--i:2">L</span><span style="--i:3">P</span><span style="--i:4">&nbsp;</span><span style="--i:5" class="dot">.</span>
+        </h1>
+
+        <!-- Chat Container -->
+        <div class="chat-wrapper">
+            <aside class="sidebar">
+                <button class="new-chat" onclick="resetChat()">+ New Conversation</button>
+            </aside>
+
+            <section class="chat-container">
+                <div class="messages" id="messages">
+                    <div class="message assistant">
+                        <div class="message-content">
+                            👋 Welcome to <strong>Dripora</strong>! I'm your AI coffee assistant. How can I help you today?
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-area">
+                    <div class="input-box">
+                        <input type="text" id="userInput" placeholder="Ask about our coffee menu, ingredients, or order..." onkeydown="if(event.key==='Enter') sendMessage()" />
+                        <button onclick="sendMessage()" aria-label="Send Message">↑</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="meta-col">
+                    <span class="location">Setif, Algeria</span>
+                    <div class="hours">
+                        <span class="label">EVERYDAY</span>
+                        <span class="time">10:00 - 19:00</span>
+                    </div>
+                </div>
+
+                <nav class="nav-links">
+                    <a href="IDEAS.html">IDEAS</a>
+                    <a href="home.html#menu-section">MENU</a>
+                    <a href="FORM.html">FEEDBACK</a>
+                    <a href="chatboot.html">HELP</a>
+                </nav>
+            </div>
+
+            <h2 class="main-title">WHERE COFFEE MEETS CRAFT.</h2>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+    let chatHistory = [];
+
+    function updateAlgeriaClock() {
+        const options = {
+            timeZone: 'Africa/Algiers',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true
+        };
+        const formatter = new Intl.DateTimeFormat('en-US', options);
+        const clockEl = document.getElementById('algeria-clock');
+        if (clockEl) clockEl.textContent = `ALG ${formatter.format(new Date())}`;
+    }
+
+    updateAlgeriaClock();
+    setInterval(updateAlgeriaClock, 1000);
+
+    function formatBotMessage(text) {
+        // Safe escaping to prevent XSS
+        let escaped = text
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+
+        // Bold: **text** -> <strong>text</strong>
+        escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+        // Italics: *text* -> <em>text</em>
+        escaped = escaped.replace(/(^|[^*])\*(?!\*)(.*?)\*/g, '$1<em>$2</em>');
+
+        // Bullets: lines starting with * or -
+        escaped = escaped.replace(/^[*-]\s+(.+)$/gm, '• $1');
+
+        return escaped;
+    }
+
+    async function sendMessage() {
+        const input = document.getElementById('userInput');
+        const text = input.value.trim();
+        if (!text) return;
+
+        appendMessage('user', text);
+        input.value = '';
+
+        const sendButton = document.querySelector('.input-box button');
+        if (sendButton) sendButton.disabled = true;
+
+        // Show typing indicator
+        const loadingId = showTypingIndicator();
+
+        const endpoint = (window.location.protocol === 'http:' || window.location.protocol === 'https:')
+            ? '/api/chat'
+            : 'http://localhost:3000/api/chat';
+
+        try {
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message: text,
+                    history: chatHistory
+                })
+            });
+
+            const data = await response.json();
+
+            removeTypingIndicator(loadingId);
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to generate response');
+            }
+
+            const replyText = data.reply || 'Sorry, I did not receive a response.';
+
+            chatHistory.push({ role: 'user', content: text });
+            chatHistory.push({ role: 'model', content: replyText });
+
+            appendMessage('assistant', replyText);
+        } catch (err) {
+            console.error('Chat error:', err);
+            removeTypingIndicator(loadingId);
+            appendMessage(
+                'assistant',
+                'Sorry, I am having trouble connecting to the server. Please ensure the chatbot server is running (run: node CHATBOOT.js) and try again.'
+            );
+        } finally {
+            if (sendButton) sendButton.disabled = false;
+            input.focus();
+        }
+    }
+
+    function showTypingIndicator() {
+        const container = document.getElementById('messages');
+        const msgDiv = document.createElement('div');
+        const id = 'typing-' + Date.now();
+        msgDiv.id = id;
+        msgDiv.className = 'message assistant';
+
+        const content = document.createElement('div');
+        content.className = 'message-content';
+        content.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+
+        msgDiv.appendChild(content);
+        container.appendChild(msgDiv);
+        container.scrollTop = container.scrollHeight;
+        return id;
+    }
+
+    function removeTypingIndicator(id) {
+        if (!id) return;
+        const el = document.getElementById(id);
+        if (el) el.remove();
+    }
+
+    function appendMessage(role, text) {
+        const container = document.getElementById('messages');
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `message ${role}`;
+
+        const content = document.createElement('div');
+        content.className = 'message-content';
+
+        if (role === 'assistant') {
+            content.innerHTML = formatBotMessage(text);
+        } else {
+            content.textContent = text;
+        }
+
+        msgDiv.appendChild(content);
+        container.appendChild(msgDiv);
+        container.scrollTop = container.scrollHeight;
+    }
+
+    function resetChat() {
+        chatHistory = [];
+
+        document.getElementById('messages').innerHTML = `
+            <div class="message assistant">
+                <div class="message-content">
+                    👋 Welcome to <strong>Dripora</strong>! I'm your AI coffee assistant. How can I help you today?
+                </div>
+            </div>`;
+    }
+
+    window.sendMessage = sendMessage;
+    window.resetChat = resetChat;
+    </script>
+</body>
+</html>
