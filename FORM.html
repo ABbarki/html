@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dripora-form</title>
+    <link rel="stylesheet" href="form.css">
+    <header class="site-header">
+          <!--navbar-->
+        <nav class="navbar">
+            <div class="nav-left" id="algeria-clock">ALG 00:00:00 AM</div>
+            <a href="home.html" class="logo-link">
+                <img src="logo.svg" alt="Dripora" id="logo">
+            </a>
+            <a href="home.html#menu-section" class="menu-link">MENU</a>
+        </nav>
+    </header>
+</head>
+<body>
+    
+<main class="ideas-container">
+        <!-- Page Section Title -->
+        <h1 class="page-title" ID ="f1">
+            <span style="--i:0">F</span><span style="--i:1">e</span><span style="--i:2">e</span><span style="--i:3">d</span><span style="--i:4">b</span><span style="--i:4">a</span><span style="--i:4">c</span><span style="--i:4">k</span><span style="--i:5" class="dot">.</span>
+        </h1>
+
+      <div class="form-wrapper">
+  <form class="glass-form" id="feedbackForm" action="/submit-feedback" method="POST">
+    <div class="form-group">
+      <label for="name">NAME</label>
+      <input type="text" id="name" name="name" required placeholder="Your Name">
+    </div>
+
+    <div class="form-group">
+      <label for="email">EMAIL</label>
+      <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+    </div>
+
+    <div class="form-group">
+      <label for="feedback">FEEDBACK</label>
+      <textarea id="feedback" name="feedback" rows="4" required placeholder="Write your feedback here..."></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn">SUBMIT</button>
+  </form>
+</div>
+</main>
+<script>
+    const feedbackForm = document.getElementById('feedbackForm');
+    if (feedbackForm) {
+        feedbackForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const submitBtn = feedbackForm.querySelector('.submit-btn');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'SUBMITTING...';
+            }
+
+            const formData = new FormData(feedbackForm);
+            const payload = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                feedback: formData.get('feedback')
+            };
+
+            try {
+                const response = await fetch('/submit-feedback', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    const data = await response.json().catch(() => ({}));
+                    window.location.href = data.redirect || 'home.html';
+                    return;
+                }
+            } catch (error) {
+                console.error('Error submitting feedback via API:', error);
+            }
+
+            // Always link into home.html upon submission
+            window.location.href = 'home.html';
+        });
+    }
+</script>
+           <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="meta-col">
+                    <span class="location">Setif, Algeria</span>
+                    <div class="hours">
+                        <span class="label">EVERYDAY</span>
+                        <span class="time">10:00 - 19:00</span>
+                    </div>
+                </div>
+
+              <nav class="nav-links">
+                    <a href="IDEAS.html">IDEAS</a>
+                    <a href="home.html#menu-section">MENU</a>
+                    <a href="FORM.html">FEEDBACK</a>
+                    <a href="chatboot.html">HELP</a>
+                </nav>
+            </div>
+
+            <h2 class="main-title">WHERE COFFEE MEETS CRAFT.</h2>
+        </div>
+        
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        function updateAlgeriaClock() {
+            const options = {
+                timeZone: 'Africa/Algiers',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            };
+            const formatter = new Intl.DateTimeFormat('en-US', options);
+            document.getElementById('algeria-clock').textContent = `ALG ${formatter.format(new Date())}`;
+        }
+        updateAlgeriaClock();
+        setInterval(updateAlgeriaClock, 1000);
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const gallery = document.querySelector(".GALLERY1");
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            if (gallery) observer.observe(gallery);
+        });
+    </script>
+</body>
+</html>

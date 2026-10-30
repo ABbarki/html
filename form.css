@@ -1,0 +1,275 @@
+@import url('https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=switzer@400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden; /* Prevents unwanted horizontal horizontal scroll */
+  background-color: #ffffff;
+  color: #0d0d0d;
+  font-family: 'Switzer', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Header & Navigation */
+.site-header {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.6); /* 60% opacity white */
+  backdrop-filter: blur(12px); /* Blurs content beneath the navbar */
+  -webkit-backdrop-filter: blur(12px); /* Safari support */
+  width: 100%;
+}
+
+.navbar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid rgba(229, 229, 229, 0.5); /* Semi-transparent border line */
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.nav-left {
+  font-family: monospace, sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+}
+
+.logo-link {
+  display: flex;
+  justify-content: center;
+}
+
+#logo {
+  height: 28px;
+  width: auto;
+  display: block;
+}
+
+.menu-link {
+  justify-self: end;
+  text-decoration: none;
+  font-weight: 700;
+  color: #000;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+}
+
+/* Main Content Wrapper */
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+/* Hero Typography */
+#f1 {
+  font-family: 'Clash Grotesk', sans-serif;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-left;
+  margin: 10rem 0 1.5rem 0.35em; /* Top: 10rem, Right: 0, Bottom: 1.5rem, Left: 0.35em */
+  text-align: left;
+}
+#f1 span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  filter: blur(10px);
+  will-change: opacity, transform, filter;
+  animation: characterAppear 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: calc(var(--i) * 0.03s);
+}
+
+@keyframes characterAppear {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+}
+/* Footer Section */
+.site-footer {
+  width: 100%;
+  background-color: #f7f7f7;
+  padding: 4rem 1.5rem 3rem 0rem;
+  margin-top: 4rem;
+  border-top: 1px solid #e5e5e5;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.meta-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #4a4a4a;
+}
+
+.hours .label {
+  font-size: 0.75rem;
+  color: #777;
+  display: block;
+}
+
+.hours .time {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #0d0d0d;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+}
+
+.nav-links a {
+  color: #0d0d0d;
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 0.95rem;
+  transition: opacity 0.2s ease;
+  margin-right: 5rem;
+}
+
+.nav-links a:hover { opacity: 0.5; }
+
+.main-title {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .navbar { padding: 1rem; }
+  .async-grid-container { grid-template-columns: 1fr; }
+  .grid-item.left-top,
+  .grid-item.center-top,
+  .grid-item.right-main {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    aspect-ratio: 4 / 3;
+  }
+  .footer-top { flex-direction: column; gap: 2rem; }
+  .nav-links { align-items: flex-start; }
+}
+/* Center Layout Wrapper */
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: 2rem;
+}
+
+/* Glassmorphism Form Container */
+.glass-form {
+  width: 100%;
+  max-width: 480px;
+  padding: 2.5rem;
+  border-radius: 24px; /* 24px border radius requested */
+  border: 1px solid #000000; /* Black border */
+  
+  /* Glassmorphism Effect */
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Form Groups & Inputs */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.glass-form label {
+  font-family: 'Switzer', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #000000;
+}
+
+.glass-form input,
+.glass-form textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.4);
+  font-family: 'Switzer', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.95rem;
+  color: #000000;
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.glass-form input:focus,
+.glass-form textarea:focus {
+  border-color: #000000;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.glass-form textarea {
+  resize: vertical;
+}
+
+/* Submit Button */
+.submit-btn {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid #000000;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: 'Switzer', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.submit-btn:hover {
+  background-color: transparent;
+  color: #000000;
+}
