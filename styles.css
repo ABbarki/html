@@ -1,0 +1,49 @@
+:root{
+  --navy:oklch(0.2 0.1 268);--sky:oklch(0.72 0.1 240);--ink:oklch(0.16 0 0);
+  --cream:oklch(0.96 0.01 95);--paper:oklch(0.99 0 0);--red:oklch(0.6 0.22 27);
+  --muted:oklch(0.55 0 0);--line:oklch(0.85 0 0);
+  --sans:"Inter Tight",system-ui,sans-serif;--mono:"JetBrains Mono",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.06em}
+.nav{position:fixed;inset:0 0 auto;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:18px 6vw;color:white;mix-blend-mode:difference}
+.logo{font-weight:500;font-size:15px;display:flex;gap:6px;align-items:center}
+.menu-btn{background:none;border:1px solid currentColor;color:inherit;padding:6px 10px;border-radius:3px;cursor:pointer}
+
+.menu{position:fixed;inset:0;z-index:40;background:oklch(0.08 0 0 / .85);backdrop-filter:blur(18px);color:white;opacity:0;pointer-events:none;transition:opacity .4s}
+.menu.open{opacity:1;pointer-events:auto}
+.menu-inner{display:flex;gap:40px;padding:90px 6vw;transform:translateY(-12px);transition:transform .4s}
+.menu.open .menu-inner{transform:none}
+.menu-cols{display:flex;gap:60px;flex:1}
+.menu-cols div,.foot-cols div{display:flex;flex-direction:column;gap:9px;font-size:14px}
+.label{color:oklch(0.7 0 0);margin-bottom:6px}
+.menu-cols a:hover,.foot-cols a:hover{opacity:.6}
+.pill{font-family:var(--mono);font-size:9px;background:oklch(1 0 0 / .15);padding:2px 6px;border-radius:3px;margin-left:4px}
+.menu-cards{display:flex;gap:12px}
+.mcard{width:220px}.mcard img{aspect-ratio:1;object-fit:cover;border-radius:4px}
+.mcard p{font-size:13px;margin-top:10px;display:flex;justify-content:space-between}
+.mcard small{color:oklch(0.6 0 0)}
+
+
+/* The dark page color makes the white navbar visible in this standalone example. */
+:root { --page-background: oklch(0.2 0.1 268); --focus: oklch(0.8 0.1 240); }
+body { min-height: 100vh; background: var(--page-background); }
+body.menu-open { overflow: hidden; }
+.menu { overflow-y: auto; }
+.menu-inner { min-height: 100%; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline-offset: 5px; }
+@media (max-width: 1100px) {
+  .menu-inner { flex-direction: column; }
+  .menu-cols { flex: none; }
+}
+@media (max-width: 800px) {
+  .menu-cols { gap: 30px; flex-wrap: wrap; }
+  .menu-cards { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}

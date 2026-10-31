@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ballance — Navbar and menu overlay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="script.js" defer></script>
+</head>
+<body>
+<header class="nav">
+  <a href="#" class="logo"><span class="mark">❋</span> ballance</a>
+  <button class="menu-btn mono" id="menuBtn" type="button" aria-controls="menu" aria-expanded="false"><span id="menuIcon">☰</span> <span id="menuLabel">MENU</span></button>
+</header>
+
+<div class="menu" id="menu" aria-hidden="true" inert>
+  <div class="menu-inner">
+    <div class="menu-cols">
+      <div><p class="mono label">PLATFORM</p><a href="#">Ballance® Home</a><a href="#">Company</a><a href="#">Pricing</a><a href="#">Contact</a></div>
+      <div><p class="mono label">RESOURCES</p><a href="#">Blog</a><a href="#">Careers <span class="pill">WE'RE HIRING</span></a><a href="#">Customer Stories</a></div>
+      <div><p class="mono label">LEGAL</p><a href="#">Cookie Policy</a><a href="#">Terms &amp; Conditions</a><a href="#">Privacy Policy</a><a href="#">404</a></div>
+    </div>
+    <div class="menu-cards">
+      <a href="#" class="mcard"><img src="img/office.jpg" alt="" /><p>Designing cards that people actually use <span>↗</span></p><small class="mono">PRODUCT</small></a>
+      <a href="#" class="mcard"><img src="img/field.jpg" alt="" /><p>Reducing friction in business spending <span>↗</span></p><small class="mono">OPERATIONS</small></a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
