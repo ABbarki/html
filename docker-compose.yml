@@ -1,0 +1,26 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: devora-ollama
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+
+  devora:
+    build: .
+    container_name: devora-app
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      OLLAMA_BASE_URL: http://ollama:11434
+      DEFAULT_MODEL: ${DEFAULT_MODEL:-qwen2.5:7b}
+      DATABASE_PATH: /srv/devora/data/devora.db
+    volumes:
+      - devora_data:/srv/devora/data
+    depends_on:
+      - ollama
+    restart: unless-stopped
+
+volumes:
+  ollama_data:
+  devora_data:
